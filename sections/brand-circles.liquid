@@ -43,7 +43,7 @@
     {{ styles }}
   "
 >
-  <div class="section-resource-list__content">
+  <div class="section-resource-list__content brand-circles-heading">
     {%- unless section.settings.title == blank -%}
       <div class="title-wrapper-with-link">
         <h2
@@ -128,7 +128,7 @@
           slides: list_items_array,
           slide_count: max_items,
           settings: section.settings,
-          slide_width_max: '200px'
+          slide_width_max: '280px'
         %}
     {% endcase %}
   </div>
@@ -162,15 +162,30 @@
 {% stylesheet %}
   /* Brand Circles Core Styling */
   .brand-circles-section {
-    --brand-circle-size-desktop: 200px;
-    --brand-circle-size-mobile: 130px;
+    --brand-circle-size-desktop: 280px;
+    --brand-circle-size-mobile: 200px;
+    padding-top: 40px !important;
+    padding-bottom: 25px !important;
+  }
+
+  /* Heading Spacing - Desktop and Mobile Specific */
+  .brand-circles-heading {
+    margin-bottom: 5px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .brand-circles-heading {
+      margin-bottom: 3px; /* 39% reduction from 5px = ~3px */
+    }
   }
 
   /* Brand Circle Container - Perfect Circles */
   .brand-circle-container {
     position: relative;
-    width: 100%;
+    width: var(--brand-circle-size-desktop);
+    height: var(--brand-circle-size-desktop);
     max-width: var(--brand-circle-size-desktop);
+    min-width: var(--brand-circle-size-desktop);
     aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
@@ -180,7 +195,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 8px auto;
+    margin: 4px auto;
+    flex-shrink: 0;
     transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
                 box-shadow var(--hover-transition-duration) var(--hover-transition-timing),
                 border-color var(--hover-transition-duration) var(--hover-transition-timing);
@@ -198,9 +214,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    gap: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   /* Brand Circle Link */
@@ -247,7 +263,10 @@
   /* Mobile Responsive */
   @media screen and (max-width: 749px) {
     .brand-circle-container {
+      width: var(--brand-circle-size-mobile);
+      height: var(--brand-circle-size-mobile);
       max-width: var(--brand-circle-size-mobile);
+      min-width: var(--brand-circle-size-mobile);
     }
     
     .brand-circle-image {
@@ -288,7 +307,7 @@
     max-width: calc((var(--brand-circle-size-desktop) * var(--column-count)) + (var(--resource-list-column-gap-desktop) * (var(--column-count) - 1)));
     margin: 0 auto;
     overflow: hidden;
-    padding: 12px 0;
+    padding: 8px 0;
   }
   
   .brand-circles-carousel .slideshow {
@@ -299,13 +318,17 @@
     flex: 0 0 auto;
     width: var(--brand-circle-size-desktop);
     min-width: var(--brand-circle-size-desktop);
+    max-width: var(--brand-circle-size-desktop);
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
   }
 
   @media screen and (max-width: 749px) {
     .brand-circles-carousel .resource-list__slide {
       width: var(--brand-circle-size-mobile);
+      min-width: var(--brand-circle-size-mobile);
+      max-width: var(--brand-circle-size-mobile);
     }
   }
 
@@ -317,6 +340,29 @@
   @media screen and (max-width: 749px) {
     .brand-circles-carousel slideshow-slides {
       gap: calc(var(--resource-list-column-gap-desktop) * 0.75);
+    }
+  }
+
+  /* Prevent layout shifts during carousel transitions */
+  .brand-circles-carousel .slideshow {
+    contain: layout style;
+  }
+
+  .brand-circles-carousel .resource-list__slide,
+  .brand-circles-carousel .brand-circle-item,
+  .brand-circles-carousel .brand-circle-card {
+    contain: layout;
+  }
+
+  /* Force immediate sizing without transitions during scroll */
+  .brand-circles-carousel .brand-circle-container {
+    will-change: transform;
+  }
+
+  /* Hide navigation arrows on mobile only */
+  @media screen and (max-width: 749px) {
+    .brand-circles-section .slideshow-control {
+      display: none !important;
     }
   }
 {% endstylesheet %}
