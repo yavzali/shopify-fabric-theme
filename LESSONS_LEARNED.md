@@ -62,7 +62,48 @@ shopify theme push --only templates/collection.json
 
 ---
 
-### 1.6. **Collection Block Structure - CRITICAL Preservation Rule**
+### 1.6. **CSS Specificity Issues with Shopify Themes - Border Visibility Problem**
+
+**Issue**: Custom CSS borders not appearing despite seemingly correct styling
+
+**Symptom**: Elements appear without borders even with explicit border declarations like:
+```css
+border: 3px solid rgba(var(--color-foreground), 0.6);
+```
+
+**Root Cause**: Shopify theme CSS has higher specificity that overrides custom section styles
+
+**Debugging Process**:
+1. **First Attempt**: Increased border thickness and opacity - no effect
+2. **Second Attempt**: Used specific colors instead of CSS variables - no effect  
+3. **Third Attempt**: Used `!important` declarations - SUCCESS
+
+**Working Solution**:
+```css
+/* This works - forces override of theme styles */
+.brand-circles-section .brand-circle-container {
+  border: 2px solid #333333 !important;
+}
+```
+
+**Key Insights**:
+- **CSS Variables Unreliable**: Theme variables like `var(--color-foreground)` may resolve to invisible colors
+- **Specificity Matters**: Use parent class selectors to increase specificity
+- **!important Required**: Theme CSS often requires `!important` to override
+- **Progressive Debugging**: Start with aggressive styling (thick black borders) to confirm CSS is working, then refine
+
+**Debugging Strategy**:
+1. Use obvious colors (black `#000000`) and thick borders (`5px`) first
+2. Add `!important` declarations
+3. Use higher specificity selectors (parent class + element)
+4. Once working, refine to desired aesthetic
+5. Test hover states with different colors to confirm interactivity
+
+**Prevention**: Always test border visibility early in development, don't assume theme variables will work as expected.
+
+---
+
+### 1.7. **Collection Block Structure - CRITICAL Preservation Rule**
 
 **Issue**: Removing collection title blocks completely breaks collection selection functionality
 

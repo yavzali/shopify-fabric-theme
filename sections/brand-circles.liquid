@@ -3,7 +3,7 @@
   assign max_items = section.settings.collection_list.count
 
   if section.settings.layout_type == 'carousel'
-    assign max_items = section.settings.columns_desktop | plus: 2
+    assign max_items = 10
   elsif section.settings.layout_type == 'grid'
     assign max_items = section.settings.columns_desktop
   endif
@@ -175,13 +175,20 @@
     border-radius: 50%;
     overflow: hidden;
     background: rgb(var(--color-background));
-    border: 1px solid rgba(var(--color-foreground), 0.1);
+    border: 2px solid rgba(128, 128, 128, 0.4) !important;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
+    margin: 8px auto;
     transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
-                box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
+                box-shadow var(--hover-transition-duration) var(--hover-transition-timing),
+                border-color var(--hover-transition-duration) var(--hover-transition-timing);
+  }
+
+  /* Ensure borders are visible with proper specificity */
+  .brand-circles-section .brand-circle-container {
+    border: 2px solid rgba(128, 128, 128, 0.4) !important;
   }
 
   /* Brand Circle Card */
@@ -192,6 +199,8 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 
   /* Brand Circle Link */
@@ -255,6 +264,7 @@
     .brand-circle-container:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(var(--color-shadow), 0.15);
+      border-color: rgba(128, 128, 128, 0.7) !important;
     }
   }
 
@@ -274,9 +284,21 @@
   }
 
   /* Carousel Layout */
+  .brand-circles-carousel {
+    max-width: calc((var(--brand-circle-size-desktop) * var(--column-count)) + (var(--resource-list-column-gap-desktop) * (var(--column-count) - 1)));
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 12px 0;
+  }
+  
+  .brand-circles-carousel .slideshow {
+    max-width: calc((var(--brand-circle-size-desktop) * var(--column-count)) + (var(--resource-list-column-gap-desktop) * (var(--column-count) - 1)));
+  }
+  
   .brand-circles-carousel .resource-list__slide {
     flex: 0 0 auto;
     width: var(--brand-circle-size-desktop);
+    min-width: var(--brand-circle-size-desktop);
     display: flex;
     justify-content: center;
   }

@@ -2,16 +2,19 @@
 
 This is a custom Shopify theme based on the Fabric theme, set up for local development.
 
-## 🏷️ Latest Stable Version: v1.2.0-stable
+## 🏷️ Latest Stable Version: v1.3.0-stable
 
 ### ✅ Recent Achievements
+- **Brand Circles Section COMPLETED**: Professional carousel displaying 10 brand collections with perfect circular design
+- **CSS Specificity Issues RESOLVED**: Comprehensive debugging and documentation for Shopify theme CSS conflicts
+- **Hover Effects PERFECTED**: Smooth animations with proper spacing to prevent visual cutoff
+- **Vendor Filtering IMPLEMENTED**: Direct links to filtered collections by brand vendor
+- **Mobile Responsive Design**: Optimized for all device sizes with elegant transitions
 - **Filter Duplication Issue RESOLVED**: Successfully removed duplicate native Shopify filters while preserving Smart Product Filter app functionality
-- **Padding Optimization COMPLETED**: Reduced Smart Product Filter app padding by 75% for better content utilization
-- **Mobile Responsiveness PERFECTED**: Optimized spacing and layout for all device sizes
-- **User Experience ENHANCED**: Improved visual hierarchy and content accessibility
 
 ### 🌐 Live Site
-- **Production URL**: https://shopmodestfashion.com/collections/all
+- **Production URL**: https://shopmodestfashion.com
+- **Brand Circles Section**: Visible on homepage with 10 curated brand collections
 - **Development Preview**: Available via `shopify theme dev`
 
 ## Setup
@@ -61,6 +64,14 @@ This is a custom Shopify theme based on the Fabric theme, set up for local devel
 - **GitHub Repository**: https://github.com/yavzali/shopify-fabric-theme
 
 ## 🔧 Technical Features
+
+### Brand Circles Section
+- Perfect circular containers with 1:1 aspect ratio
+- Horizontal carousel displaying 5 brands initially (10 total)
+- Vendor filtering links to filtered collection pages
+- Elegant hover effects with subtle border transitions
+- Mobile responsive design (200px desktop, 130px mobile)
+- CSS specificity fixes with !important declarations
 
 ### Smart Product Filter Integration
 - Custom CSS targeting for optimal app integration
