@@ -248,8 +248,8 @@
         "full_width_on_mobile": true,
         "columns_gap_horizontal": 0,
         "columns_gap_vertical": 16,
-        "padding-inline-start": 20,
-        "padding-inline-end": 20,
+        "padding-inline-start": 5,
+        "padding-inline-end": 5,
         "color_scheme": "",
         "padding-block-start": 0,
         "padding-block-end": 24
@@ -258,7 +258,7 @@
     "smart-filter-css-fix": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<style>\n/* Smart Product Filter App - Mobile Padding Fix */\n@media screen and (max-width: 749px) {\n  /* Fix padding for Smart Product Filter app content on mobile */\n  #gspf-container,\n  .gspf-container,\n  [id*=\"globo-filter\"],\n  [class*=\"globo-filter\"],\n  [id*=\"gspf\"],\n  [class*=\"gspf\"] {\n    padding-left: 20px !important;\n    padding-right: 20px !important;\n  }\n  \n  /* Target specific Smart Product Filter elements that are flush with edges */\n  .gspf-product-list,\n  .gspf-product-grid,\n  .gspf-products,\n  .gspf-toolbar,\n  .gspf-search,\n  .gspf-sort,\n  .gspf-pagination {\n    padding-left: 20px !important;\n    padding-right: 20px !important;\n    box-sizing: border-box !important;\n  }\n  \n  /* Fix for any injected content that bypasses theme padding */\n  .main-collection-grid > *:not(.main-collection-grid__title),\n  .collection-wrapper > *:not(.facets-block-wrapper) {\n    padding-left: 20px !important;\n    padding-right: 20px !important;\n    box-sizing: border-box !important;\n  }\n  \n  /* Ensure product grid items maintain proper spacing */\n  .product-grid {\n    padding-left: 20px !important;\n    padding-right: 20px !important;\n    box-sizing: border-box !important;\n  }\n  \n  /* Fix for any dynamically injected filter/search controls */\n  [data-gspf-container],\n  [data-gspf-toolbar],\n  [data-gspf-products] {\n    padding-left: 20px !important;\n    padding-right: 20px !important;\n    box-sizing: border-box !important;\n  }\n}\n</style>"
+        "custom_liquid": "<style>\n/* Smart Product Filter App - Mobile Padding Fix */\n@media screen and (max-width: 749px) {\n  /* Fix padding for Smart Product Filter app content on mobile */\n  #gspf-container,\n  .gspf-container,\n  [id*=\"globo-filter\"],\n  [class*=\"globo-filter\"],\n  [id*=\"gspf\"],\n  [class*=\"gspf\"] {\n    padding-left: 5px !important;\n    padding-right: 5px !important;\n  }\n  \n  /* Target specific Smart Product Filter elements that are flush with edges */\n  .gspf-product-list,\n  .gspf-product-grid,\n  .gspf-products,\n  .gspf-toolbar,\n  .gspf-search,\n  .gspf-sort,\n  .gspf-pagination {\n    padding-left: 5px !important;\n    padding-right: 5px !important;\n    box-sizing: border-box !important;\n  }\n  \n  /* Fix for any injected content that bypasses theme padding */\n  .main-collection-grid > *:not(.main-collection-grid__title),\n  .collection-wrapper > *:not(.facets-block-wrapper) {\n    padding-left: 5px !important;\n    padding-right: 5px !important;\n    box-sizing: border-box !important;\n  }\n  \n  /* Ensure product grid items maintain proper spacing */\n  .product-grid {\n    padding-left: 5px !important;\n    padding-right: 5px !important;\n    box-sizing: border-box !important;\n  }\n  \n  /* Fix for any dynamically injected filter/search controls */\n  [data-gspf-container],\n  [data-gspf-toolbar],\n  [data-gspf-products] {\n    padding-left: 5px !important;\n    padding-right: 5px !important;\n    box-sizing: border-box !important;\n  }\n}\n</style>"
       }
     }
   },
