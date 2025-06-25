@@ -29,6 +29,39 @@ shopify theme push --only templates/collection.json
 
 ---
 
+### 1.5. **Shopify CLI Push Commands - Manual Approval Issue**
+
+**Issue**: AI assistant consistently gets "stuck" waiting for Shopify CLI push commands to complete
+
+**Root Cause**: Shopify CLI requires **manual user approval** for theme pushes, but the AI doesn't detect this prompt
+
+**What Actually Happens**:
+```bash
+shopify theme push --only templates/collection.json
+# CLI shows: "Do you want to push these changes? (y/n)"
+# AI waits indefinitely, thinking the command is stuck
+# User must manually type 'y' and press Enter
+```
+
+**Better Approach**: 
+- **For User**: Expect to manually approve each push command
+- **For AI**: Acknowledge that push commands require user interaction
+- **Future Improvement**: Use non-interactive flags if available
+
+**Current Reality**: 
+- Shopify CLI v3.81.2 does NOT have non-interactive flags like `--force` or `--yes`
+- Every `shopify theme push` command requires manual user approval
+- AI assistants cannot bypass this interactive prompt
+
+**Workflow Implications**:
+1. **For AI**: Acknowledge that push commands need user interaction
+2. **For User**: Be ready to manually approve each push with 'y' + Enter
+3. **For Efficiency**: Batch multiple file changes before pushing
+
+**Key Insight**: Shopify CLI pushes are inherently interactive - there's no current way to automate approval.
+
+---
+
 ### 2. **Theme Management - Development vs Live Confusion**
 
 **Issue**: Multiple themes causing confusion between what's live vs what's being edited
@@ -158,6 +191,12 @@ shopify theme push --only templates/collection.json
 - Use `--only` flag immediately
 - Don't waste time trying to fix `page_width` contradictions
 
+### 1.5. **Don't Wait Indefinitely for Shopify Push Commands**
+- Shopify CLI pushes require manual approval (y/n prompt)
+- AI assistants can't see or respond to interactive prompts
+- User must manually approve each push command
+- Consider using non-interactive flags: `--force` or `--yes` (if supported)
+
 ### 2. **Don't Assume Local = Live**
 - Always verify which theme is actually live
 - Check theme IDs before making changes
@@ -219,6 +258,8 @@ shopify theme push --only templates/collection.json
 2. **Investigate**: Use browser tools, check theme structure
 3. **Plan Solution**: Minimal, targeted approach
 4. **Implement**: Use proven methods (--only flag)
+   - **Important**: User must manually approve each `shopify theme push` command
+   - AI will appear "stuck" waiting for user to type 'y' and press Enter
 5. **Test Thoroughly**: Desktop, mobile, edge cases
 6. **Document**: Commit with clear messages
 7. **Version Control**: Tag stable releases
