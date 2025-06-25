@@ -53,12 +53,19 @@ shopify theme push --only templates/collection.json
 - Every `shopify theme push` command requires manual user approval
 - AI assistants cannot bypass this interactive prompt
 
+**NEW ISSUE (2024-12-31)**: Manual prompt appears briefly then disappears
+- CLI shows approval prompt for ~1 second then vanishes
+- User cannot click or interact before timeout
+- May indicate CLI timeout or connection issues
+- **SOLUTION FOUND**: Use explicit theme ID in command: `shopify theme push --theme=THEME_ID --only filename`
+
 **Workflow Implications**:
 1. **For AI**: Acknowledge that push commands need user interaction
 2. **For User**: Be ready to manually approve each push with 'y' + Enter
 3. **For Efficiency**: Batch multiple file changes before pushing
+4. **NEW**: Consider alternative deployment methods if CLI becomes unreliable
 
-**Key Insight**: Shopify CLI pushes are inherently interactive - there's no current way to automate approval.
+**Key Insight**: Shopify CLI pushes are inherently interactive - there's no current way to automate approval. Recent timeout issues suggest potential CLI instability.
 
 ---
 

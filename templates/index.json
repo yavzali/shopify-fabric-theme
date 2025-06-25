@@ -53,9 +53,9 @@
             "label": "Shop now",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
-            "style_class": "link",
+            "style_class": "button",
             "width": "custom",
-            "custom_width": 15,
+            "custom_width": 26,
             "width_mobile": "fit-content",
             "custom_width_mobile": 100
           },
@@ -94,6 +94,37 @@
         "reflection_opacity": 75,
         "padding-block-start": 0,
         "padding-block-end": 48
+      }
+    },
+    "brand_circles_section": {
+      "type": "brand-circles",
+      "name": "Brand Circles",
+      "settings": {
+        "title": "Shop by Brand",
+        "heading_size": "h2",
+        "collection_list": [
+          "abercrombie-fitch",
+          "anthropologie",
+          "aritzia",
+          "asos",
+          "h-m",
+          "mango",
+          "nordstrom",
+          "revolve",
+          "uniqlo",
+          "urban-outfitters"
+        ],
+        "layout_type": "carousel",
+        "columns_desktop": 5,
+        "columns_mobile": "2",
+        "columns_gap": 20,
+        "rows_gap": 20,
+        "swipe_on_mobile": true,
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "gap": 16,
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "collection_list_FpLbeT": {
@@ -1000,6 +1031,7 @@
   },
   "order": [
     "hero_rhMed7",
+    "brand_circles_section",
     "collection_list_FpLbeT",
     "media_with_content_GRV6iJ",
     "marquee_izzYrQ",
