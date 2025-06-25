@@ -62,6 +62,32 @@ shopify theme push --only templates/collection.json
 
 ---
 
+### 1.6. **Collection Block Structure - CRITICAL Preservation Rule**
+
+**Issue**: Removing collection title blocks completely breaks collection selection functionality
+
+**What Happens When You Remove Collection Title Blocks**:
+- `collection_list` array becomes empty `[]`
+- Collections carousel disappears from live site
+- User loses all curated collection selections
+- Restoring block structure populates with ALL collections instead of user's selection
+
+**Root Cause**: Collection title blocks are required for Shopify's collection management system
+
+**NEVER DO THIS**:
+```json
+"block_order": []  // This breaks everything
+```
+
+**Correct Approach for Hiding Labels**:
+- Keep collection title blocks in structure
+- Use CSS `display: none` instead of removing blocks
+- Add custom CSS to hide text while preserving functionality
+
+**Key Insight**: Always preserve Shopify's required block structure - modify appearance with CSS, not by removing blocks.
+
+---
+
 ### 2. **Theme Management - Development vs Live Confusion**
 
 **Issue**: Multiple themes causing confusion between what's live vs what's being edited
@@ -304,4 +330,15 @@ shopify theme dev
 
 This project demonstrates successful integration of third-party apps (Smart Product Filter) with custom Shopify theme modifications while maintaining professional appearance and full functionality. The key to success was understanding the app's structure and working with it rather than against it.
 
-**Most Important Lesson**: When Shopify CLI gets stuck on validation errors, immediately switch to `--only` flag pushes. Don't waste time debugging contradictory validation requirements. 
+**Most Important Lesson**: When Shopify CLI gets stuck on validation errors, immediately switch to `--only` flag pushes. Don't waste time debugging contradictory validation requirements.
+
+## **CRITICAL: Always Use --only Flag for Shopify CLI Commands**
+
+**⚠️ RECURRING ISSUE**: The `page_width` validation errors will ALWAYS occur with `shopify theme push` and `shopify theme pull` commands.
+
+**SOLUTION**: ALWAYS use the `--only` flag to bypass validation errors:
+- `shopify theme push --only=templates/index.json`
+- `shopify theme pull --only=templates/index.json`
+- `shopify theme pull --development --only=templates/index.json`
+
+**DO NOT** attempt to push/pull without the `--only` flag - it will get stuck every time. 
