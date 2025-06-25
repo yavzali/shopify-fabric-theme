@@ -1,0 +1,470 @@
+{% liquid
+  assign section_collections = section.settings.collection_list
+  assign max_items = section.settings.collection_list.count
+
+  if section.settings.layout_type == 'carousel'
+    assign max_items = section.settings.columns_desktop | plus: 2
+  elsif section.settings.layout_type == 'grid'
+    assign max_items = section.settings.columns_desktop
+  endif
+
+  assign classes = 'resource-list--grid brand-circles-list'
+  if section.settings.layout_type == 'carousel'
+    assign classes = 'resource-list__carousel brand-circles-carousel'
+  endif
+
+  capture styles
+    echo '--resource-list-column-gap-desktop: ' | append: section.settings.columns_gap | append: 'px;'
+    echo '--resource-list-row-gap-desktop: ' | append: section.settings.rows_gap | append: 'px;'
+    echo '--resource-list-columns: repeat(' | append: section.settings.columns_desktop | append: ', 1fr);'
+    echo '--resource-list-columns-mobile: repeat(' | append: section.settings.columns_mobile | append: ', 1fr);'
+    echo '--column-count: ' | append: section.settings.columns_desktop | append: ';'
+    echo '--column-count-mobile: ' | append: section.settings.columns_mobile | append: ';'
+  endcapture
+%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    color-{{ section.settings.color_scheme }}
+    section-resource-list
+    spacing-style
+    gap-style
+    brand-circles-section
+    {% if section.settings.collection_list == blank and request.design_mode == false %}
+      in-onboarding-state
+    {% endif %}
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    {% render 'gap-style', value: section.settings.gap %}
+    {{ styles }}
+  "
+>
+  <div class="section-resource-list__content">
+    {%- unless section.settings.title == blank -%}
+      <div class="title-wrapper-with-link">
+        <h2
+          class="title inline-richtext {{ section.settings.heading_size }}"
+          {{ section.settings.title | escape }}
+        >
+          {{ section.settings.title }}
+        </h2>
+      </div>
+    {%- endunless -%}
+  </div>
+
+  {% if section_collections == null %}
+    {% for i in (1..max_items) %}
+      {% assign section_collections = section_collections | append: ', ' %}
+    {% endfor %}
+    {% assign section_collections = section_collections | split: ',' %}
+  {% endif %}
+
+  {% capture list_items %}
+    {% for collection in section_collections limit: max_items %}
+      {% assign collection_vendor = collection.title | escape %}
+      <div class="resource-list__item brand-circle-item">
+        <div class="brand-circle-card">
+          <a href="/collections/all?filter.v.vendor={{ collection_vendor }}" class="brand-circle-link">
+            <div class="brand-circle-container">
+              {% if collection.featured_image != blank %}
+                <div class="brand-circle-image">
+                  <img
+                    srcset="{{ collection.featured_image | image_url: width: 400 }} 400w,
+                            {{ collection.featured_image | image_url: width: 300 }} 300w,
+                            {{ collection.featured_image | image_url: width: 200 }} 200w"
+                    src="{{ collection.featured_image | image_url: width: 300 }}"
+                    alt="{{ collection.title | escape }}"
+                    loading="lazy"
+                    width="300"
+                    height="300"
+                    class="brand-logo"
+                  >
+                </div>
+              {% else %}
+                <div class="brand-circle-image brand-circle-placeholder">
+                  <div class="placeholder-brand">{{ collection.title | escape }}</div>
+                </div>
+              {% endif %}
+            </div>
+            <span class="visually-hidden">{{ collection.title | escape }}</span>
+          </a>
+        </div>
+      </div>
+      {% unless forloop.last %}
+        <!--@list/split-->
+      {% endunless %}
+    {% endfor %}
+  {% endcapture %}
+
+  {% liquid
+    assign list_items_array = list_items | strip | split: '<!--@list/split-->'
+  %}
+
+  <div
+    class="
+      resource-list
+      brand-circles-wrapper
+      {% if section.settings.layout_type == 'carousel' %}
+        force-full-width
+      {% endif %}
+      {% if section.settings.swipe_on_mobile and section.settings.layout_type != 'carousel' %}
+        hidden--mobile
+      {% endif %}
+      {{ classes }}
+    "
+    style="{{ styles }}"
+    data-testid="brand-circles-list"
+  >
+    {% case section.settings.layout_type %}
+      {% when 'grid' %}
+        {{ list_items }}
+      {% when 'carousel' %}
+        {% render 'resource-list-carousel',
+          ref: 'brandCirclesCarousel',
+          slides: list_items_array,
+          slide_count: max_items,
+          settings: section.settings,
+          slide_width_max: '200px'
+        %}
+    {% endcase %}
+  </div>
+
+  {% if section.settings.layout_type != 'carousel' and section.settings.swipe_on_mobile %}
+    <div
+      class="
+        resource-list
+        hidden--desktop
+        resource-list__carousel
+        brand-circles-carousel
+        force-full-width
+      "
+      style="
+        --resource-list-column-gap-desktop: {{ section.settings.columns_gap }}px;
+        --column-count: {{ section.settings.columns_desktop }};
+        --column-count-mobile: 1;
+      "
+    >
+      {% render 'resource-list-carousel',
+        ref: 'brandCirclesCarouselMobile',
+        slides: list_items_array,
+        slide_count: max_items,
+        settings: section.settings,
+        slide_width_max: '200px'
+      %}
+    </div>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  /* Brand Circles Core Styling */
+  .brand-circles-section {
+    --brand-circle-size-desktop: 200px;
+    --brand-circle-size-mobile: 130px;
+  }
+
+  /* Brand Circle Container - Perfect Circles */
+  .brand-circle-container {
+    position: relative;
+    width: 100%;
+    max-width: var(--brand-circle-size-desktop);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgb(var(--color-background));
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: transform var(--hover-transition-duration) var(--hover-transition-timing),
+                box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
+  }
+
+  /* Brand Circle Card */
+  .brand-circle-card {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Brand Circle Link */
+  .brand-circle-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Brand Circle Image Container */
+  .brand-circle-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20%;
+  }
+
+  /* Brand Logo Image */
+  .brand-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Placeholder Styling */
+  .brand-circle-placeholder {
+    background: rgba(var(--color-foreground), 0.05);
+  }
+
+  .placeholder-brand {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: rgba(var(--color-foreground), 0.6);
+    padding: 0 8px;
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 749px) {
+    .brand-circle-container {
+      max-width: var(--brand-circle-size-mobile);
+    }
+    
+    .brand-circle-image {
+      padding: 15%;
+    }
+    
+    .placeholder-brand {
+      font-size: 12px;
+    }
+  }
+
+  /* Hover Effects */
+  @media (any-pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .brand-circle-container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(var(--color-shadow), 0.15);
+    }
+  }
+
+  /* Grid Layout */
+  .brand-circles-list.resource-list--grid {
+    display: grid;
+    grid-template-columns: var(--resource-list-columns);
+    gap: var(--resource-list-column-gap-desktop);
+    justify-items: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .brand-circles-list.resource-list--grid {
+      grid-template-columns: var(--resource-list-columns-mobile);
+      gap: calc(var(--resource-list-column-gap-desktop) * 0.75);
+    }
+  }
+
+  /* Carousel Layout */
+  .brand-circles-carousel .resource-list__slide {
+    flex: 0 0 auto;
+    width: var(--brand-circle-size-desktop);
+    display: flex;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    .brand-circles-carousel .resource-list__slide {
+      width: var(--brand-circle-size-mobile);
+    }
+  }
+
+  /* Ensure proper spacing in carousel */
+  .brand-circles-carousel slideshow-slides {
+    gap: var(--resource-list-column-gap-desktop);
+  }
+
+  @media screen and (max-width: 749px) {
+    .brand-circles-carousel slideshow-slides {
+      gap: calc(var(--resource-list-column-gap-desktop) * 0.75);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brand Circles",
+  "tag": "section",
+  "class": "section section-brand-circles",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Shop modest from your favorite brands",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {"value": "h2", "label": "Small"},
+        {"value": "h1", "label": "Medium"},
+        {"value": "h0", "label": "Large"}
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collections",
+      "limit": 20,
+      "info": "Select collections to display as brand circles. Collection titles will be used as brand names for filtering."
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "options": [
+        {"value": "grid", "label": "Grid"},
+        {"value": "carousel", "label": "Carousel"}
+      ],
+      "default": "carousel",
+      "label": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 5,
+      "label": "Number of visible brands on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {"value": "1", "label": "1 column"},
+        {"value": "2", "label": "2 columns"}
+      ],
+      "default": "2",
+      "label": "Columns on mobile"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between brands",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "rows_gap",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between rows",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_on_mobile",
+      "default": true,
+      "label": "Enable swipe on mobile"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "options": [
+        {"value": "page-width", "label": "Page width"},
+        {"value": "full-width", "label": "Full width"}
+      ],
+      "default": "page-width",
+      "label": "Section width"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Section spacing",
+      "default": 36
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "icons_style",
+      "options": [
+        {"value": "arrow", "label": "Arrow"},
+        {"value": "caret", "label": "Caret"}
+      ],
+      "default": "arrow",
+      "label": "Navigation icon style"
+    },
+    {
+      "type": "select",
+      "id": "icons_shape",
+      "options": [
+        {"value": "circle", "label": "Circle"},
+        {"value": "square", "label": "Square"},
+        {"value": "none", "label": "None"}
+      ],
+      "default": "circle",
+      "label": "Navigation icon shape"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Circles",
+      "settings": {
+        "title": "Shop modest from your favorite brands",
+        "layout_type": "carousel",
+        "columns_desktop": 5,
+        "columns_mobile": "2"
+      }
+    }
+  ]
+}
+{% endschema %} 
