@@ -45,4 +45,4 @@ This is a custom Shopify theme based on the Fabric theme, set up for local devel
 ## Store Information
 
 - **Theme**: Fabric (#178667716978)
-- **Store**: dmrggj-28.myshopify.com 
+- **Store**: dmrggj-28.myshopify.com
