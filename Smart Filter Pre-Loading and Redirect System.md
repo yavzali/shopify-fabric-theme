@@ -96,22 +96,42 @@ Enhance the existing Smart Product Filter app with automatic filter pre-loading 
 
 ---
 
-## 🚀 **PHASE 3: RETAILER COLLECTION REDIRECTS**
+## 🚀 **PHASE 3: AESTHETIC & UX IMPROVEMENTS**
 
 ### **Objective**
-Redirect all retailer-specific collection pages (like `/collections/asos`, `/collections/uniqlo`) to the All Products collection with both modest + retailer filters pre-applied.
+Polish the Smart Product Filter interface and optimize the product grid layout for the product aggregator use case.
 
-### **Benefits**
-- **Unified Experience**: All product browsing happens in one optimized collection
-- **Better Performance**: Leverages Smart Product Filter's advanced filtering
-- **Improved SEO**: Consolidates product discovery to main collection page
-- **Enhanced UX**: Consistent interface across all retailer browsing
+### **Three Key Improvements:**
+
+#### **1. Filter Capitalization Fixes**
+- **Issue**: Filter pills show "modest" instead of "Modest"
+- **Fix**: Ensure all filter names are properly capitalized in both pills and sidebar
+- **Scope**: All filter categories (Modesty Level, Retailer, Sale Status, Clothing Type, etc.)
+
+#### **2. Filter Spacing Improvements**
+- **Issue**: No space between filter names and counts: "Modest(657)"
+- **Fix**: Add proper spacing: "Modest (657)"
+- **Scope**: All filter options in the left sidebar
+
+#### **3. Remove Add to Cart Functionality**
+- **Rationale**: Site functions as product aggregator, not direct sales
+- **Benefit**: More space for better product grid display
+- **Scope**: Remove "Add to cart" buttons from both desktop and mobile views
+- **Result**: Cleaner, more focused product browsing experience
 
 ### **Implementation Strategy**
-1. **Discovery**: Find all retailer collection links across the website
-2. **URL Updates**: Replace retailer collection links with filtered All Products URLs
-3. **JavaScript Fallback**: Handle direct navigation to retailer collections
-4. **Testing**: Verify all retailer filters work correctly
+1. **CSS Targeting**: Use Smart Product Filter app's existing CSS classes
+2. **Text Transformation**: Apply proper capitalization via CSS or JavaScript
+3. **Spacing Fixes**: Add CSS rules for consistent filter formatting
+4. **Button Removal**: Hide add to cart buttons while preserving product links
+5. **Grid Optimization**: Utilize freed space for better product presentation
+
+### **Benefits**
+- **Professional Appearance**: Properly capitalized filter labels
+- **Better Readability**: Clear spacing between filter names and counts
+- **Focused Experience**: Removal of unnecessary purchase elements
+- **Improved Layout**: More space for product information and images
+- **Aggregator-Optimized**: Interface tailored for product discovery vs. direct sales
 
 ---
 
