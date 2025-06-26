@@ -1,0 +1,302 @@
+/* ========================================
+   Collection Grid Standardization Styles
+   ======================================== */
+
+/* Base Grid Container Reset and Standardization */
+.product-grid,
+.gspf-product-list,
+[class*="globo-filter"] .product-grid,
+.gspf_product_list,
+#gspf_product_list {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+/* Mobile Responsive Grid */
+@media screen and (max-width: 749px) {
+  .product-grid,
+  .gspf-product-list,
+  [class*="globo-filter"] .product-grid,
+  .gspf_product_list,
+  #gspf_product_list {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+}
+
+/* Tablet Grid */
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .product-grid,
+  .gspf-product-list,
+  [class*="globo-filter"] .product-grid,
+  .gspf_product_list,
+  #gspf_product_list {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+}
+
+/* Product Grid Items - Universal Reset */
+.product-grid__item,
+.gspf-product-item,
+.product-grid > li,
+.gspf-product-list > li,
+[class*="globo-filter"] .product-grid__item,
+li[class*="product"],
+.product-card,
+.card {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Image Container - Consistent Aspect Ratio Enforcement */
+.product-card__image-wrapper,
+.card__media,
+.product-card__image,
+.gspf-product-image,
+[class*="globo-filter"] .product-card__image-wrapper,
+.product-grid__item .product-card__image-wrapper,
+.product-grid__item .card__media,
+.product-grid li .product-card__image-wrapper,
+.product-grid li .card__media,
+.gspf-product-list li .product-card__image-wrapper,
+.gspf-product-list li .card__media {
+  position: relative !important;
+  width: 100% !important;
+  height: 0 !important;
+  padding-bottom: 125% !important; /* 4:5 aspect ratio = 5/4 * 100% */
+  overflow: hidden !important;
+  background-color: #f8f8f8 !important;
+  border-radius: 4px !important;
+}
+
+/* Modern aspect-ratio support */
+@supports (aspect-ratio: 4/5) {
+  .product-card__image-wrapper,
+  .card__media,
+  .product-card__image,
+  .gspf-product-image,
+  [class*="globo-filter"] .product-card__image-wrapper,
+  .product-grid__item .product-card__image-wrapper,
+  .product-grid__item .card__media,
+  .product-grid li .product-card__image-wrapper,
+  .product-grid li .card__media,
+  .gspf-product-list li .product-card__image-wrapper,
+  .gspf-product-list li .card__media {
+    height: auto !important;
+    padding-bottom: 0 !important;
+    aspect-ratio: 4/5 !important;
+  }
+}
+
+/* Image Elements - Perfect Fit */
+.product-card__image-wrapper img,
+.card__media img,
+.product-card__image img,
+.gspf-product-image img,
+[class*="globo-filter"] .product-card__image-wrapper img,
+.product-grid__item img,
+.product-grid li img,
+.gspf-product-list li img,
+img[alt*="product"],
+img[src*="product"] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 4px !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* Link containers that wrap images */
+.product-card__image-wrapper a,
+.card__media a,
+.product-grid__item a[href*="products"],
+.gspf-product-list li a[href*="products"] {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+/* Product Information Standardization */
+.product-card__info,
+.card__content,
+.gspf-product-info,
+.product-grid__item > div:not([class*="image"]):not([class*="media"]) {
+  padding: 12px 0 !important;
+  flex-grow: 1 !important;
+}
+
+/* Product Title Standardization */
+.product-card__title,
+.card__heading,
+.gspf-product-title,
+.product-grid__item h3,
+.product-grid__item h2,
+.product-grid__item .card__heading {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  margin: 0 0 8px 0 !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Price Standardization */
+.product-card__price,
+.price,
+.gspf-product-price,
+.product-grid__item .price,
+.card__content .price {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin: 4px 0 0 0 !important;
+}
+
+/* Vendor/Brand Links */
+.product-grid__item a[href*="vendors"],
+.card__content a[href*="vendors"] {
+  font-size: 12px !important;
+  color: #666 !important;
+  text-decoration: none !important;
+  margin-bottom: 4px !important;
+  display: block !important;
+}
+
+/* Sale Badges and Labels */
+.product-card__badge,
+.card__badge,
+.badge,
+.product-grid__item .badge {
+  position: absolute !important;
+  top: 8px !important;
+  left: 8px !important;
+  z-index: 10 !important;
+  font-size: 12px !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+}
+
+/* Quick View Buttons */
+.product-grid__item button,
+.card button,
+.product-card button {
+  margin-top: 8px !important;
+  width: 100% !important;
+}
+
+/* Hover Effects */
+.product-grid__item:hover img,
+.card:hover img,
+.product-card:hover img {
+  transform: scale(1.05) !important;
+}
+
+/* Loading States */
+.product-card--loading .product-card__image-wrapper,
+.card--loading .card__media {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%) !important;
+  background-size: 200% 100% !important;
+  animation: shimmer 1.5s infinite !important;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Smart Product Filter App Specific Overrides */
+.gspf-product-list,
+.gspf_product_list,
+#gspf_product_list,
+[class*="gspf"] .product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.gspf-product-list li,
+.gspf_product_list li,
+#gspf_product_list li,
+[class*="gspf"] li {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* Force Override for Stubborn Elements */
+.product-grid > *,
+.gspf-product-list > *,
+[id*="gspf"] > * {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+}
+
+/* Missing Image Fallbacks */
+.product-card__image-wrapper:empty::after,
+.card__media:empty::after {
+  content: "No Image Available" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: #999 !important;
+  font-size: 12px !important;
+  text-align: center !important;
+}
+
+/* Debug Mode (for development) */
+body.grid-debug .product-grid {
+  border: 2px solid red !important;
+}
+
+body.grid-debug .product-grid__item {
+  border: 1px solid blue !important;
+}
+
+body.grid-debug .product-card__image-wrapper {
+  border: 1px solid green !important;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .product-grid__item img,
+  .card img {
+    transition: none !important;
+  }
+  
+  .product-card--loading .product-card__image-wrapper {
+    animation: none !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .product-grid {
+    display: block !important;
+  }
+  
+  .product-grid__item {
+    break-inside: avoid !important;
+    margin-bottom: 20px !important;
+  }
+} 
