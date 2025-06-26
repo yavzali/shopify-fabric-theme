@@ -105,33 +105,66 @@ Polish the Smart Product Filter interface and optimize the product grid layout f
 
 #### **1. Filter Capitalization Fixes**
 - **Issue**: Filter pills show "modest" instead of "Modest"
-- **Fix**: Ensure all filter names are properly capitalized in both pills and sidebar
+- **Fix**: Ensure all filter names are properly capitalized in display only (UI layer)
 - **Scope**: All filter categories (Modesty Level, Retailer, Sale Status, Clothing Type, etc.)
+- **Capitalization Rules**:
+  - **Retailers**: Brand-specific capitalization (e.g., "ASOS", "H&M", "Uniqlo")
+  - **Other Filters**: First letter capitalization (e.g., "Modest", "On-Sale")
+- **⚠️ CRITICAL**: Only modify display/UI - do NOT touch filter app internals or backend
 
 #### **2. Filter Spacing Improvements**
 - **Issue**: No space between filter names and counts: "Modest(657)"
 - **Fix**: Add proper spacing: "Modest (657)"
 - **Scope**: All filter options in the left sidebar
+- **Note**: Most capitalization already implemented, focus on spacing consistency
 
-#### **3. Remove Add to Cart Functionality**
-- **Rationale**: Site functions as product aggregator, not direct sales
-- **Benefit**: More space for better product grid display
-- **Scope**: Remove "Add to cart" buttons from both desktop and mobile views
-- **Result**: Cleaner, more focused product browsing experience
+#### **3. Remove Add to Cart & Redirect to Source**
+- **Strategy**: Completely hide "Add to cart" buttons and utilize freed space
+- **Product Links**: Replace with redirects to custom metafield `inventory.source_urls`
+  - **Namespace**: `inventory`
+  - **Key**: `source_urls`
+  - **Behavior**: Takes users off-site to original retailer
+- **Space Utilization**: Use freed space for larger product images and text
+- **Future Consideration**: Quick view product images (document for future implementation)
 
-### **Implementation Strategy**
-1. **CSS Targeting**: Use Smart Product Filter app's existing CSS classes
-2. **Text Transformation**: Apply proper capitalization via CSS or JavaScript
-3. **Spacing Fixes**: Add CSS rules for consistent filter formatting
-4. **Button Removal**: Hide add to cart buttons while preserving product links
-5. **Grid Optimization**: Utilize freed space for better product presentation
+### **Grid Optimization Strategy**
+- **Product Images**: Make larger using freed space from removed buttons
+- **Product Information**: Slightly larger text for better readability
+- **⚠️ CONSTRAINT**: Must preserve product grid standardization and formatting
+- **Careful Implementation**: Avoid breaking existing grid system
+
+### **Implementation Specifications**
+
+#### **Cross-Platform Requirements**
+- **Mobile & Desktop**: Both must look sharp and aesthetic
+- **Consistency**: Maintain professional appearance across all devices
+
+#### **Technical Approach**
+- **Priority**: Least disruptive method that avoids latency or aesthetic issues
+- **Options**: CSS-only preferred, JavaScript if necessary, template modifications as last resort
+- **Preservation**: Maintain all existing grid standardization functionality
+
+#### **Testing Protocol**
+- **Method**: MCP browser testing for visual verification
+- **Approach**: Implement and test each improvement individually
+- **Validation**: Ensure no regression in existing functionality
+
+### **Implementation Order**
+1. **Filter Spacing Fixes** (lowest risk, immediate visual improvement)
+2. **Filter Capitalization** (UI-only changes, minimal risk)
+3. **Add to Cart Removal & Source Redirects** (highest impact, requires careful testing)
 
 ### **Benefits**
 - **Professional Appearance**: Properly capitalized filter labels
 - **Better Readability**: Clear spacing between filter names and counts
-- **Focused Experience**: Removal of unnecessary purchase elements
-- **Improved Layout**: More space for product information and images
-- **Aggregator-Optimized**: Interface tailored for product discovery vs. direct sales
+- **Aggregator-Optimized**: Direct traffic to original retailers via source URLs
+- **Enhanced Layout**: Larger product images and improved text readability
+- **Focused Experience**: Clean interface optimized for product discovery
+
+### **Future Enhancements (Documentation Only)**
+- **Quick View Functionality**: Hover or click to preview product images
+- **Enhanced Product Information**: Additional metadata display
+- **Advanced Grid Layouts**: Responsive sizing based on content
 
 ---
 
