@@ -25,14 +25,32 @@
 - **Implementation**: Updated brand circles to use Smart Product Filter parameters
 - **URL Format**: `/collections/all?gf_516964=modest&gf_516921=RETAILER`
 
-### ❌ FAILED PHASE
+### ❌ FAILED PHASES
 
-#### Phase 3: Display Fixes - ABANDONED
-- **Status**: ❌ FAILED - Caused catastrophic page breakdown
-- **Attempted**: Filter spacing and capitalization improvements
+#### Phase 3A: Filter Spacing Improvements - FAILED
+- **Status**: ❌ FAILED - CSS and JavaScript approaches both failed
+- **Goal**: Add space between filter names and counts (e.g., "modest(657)" → "modest (657)")
+- **Issue**: Smart Product Filter dynamic DOM structure not accessible
+
+#### Phase 3B: Filter Capitalization Fixes - FAILED  
+- **Status**: ❌ FAILED - JavaScript DOM manipulation caused catastrophic page breakdown
+- **Goal**: Proper capitalization (e.g., "modest" → "Modest")
 - **Issue**: JavaScript conflicts with Smart Product Filter app
-- **Resolution**: Reverted to stable version, documented lessons learned
-- **Recommendation**: Do not attempt display fixes on third-party apps
+
+#### Phase 3C: Filter Pills Enhancement - FAILED
+- **Status**: ❌ FAILED - Part of the JavaScript approach that broke everything
+- **Goal**: Fix active filter pill display ("modest" → "Modest")
+- **Issue**: Third-party app content modification fundamentally incompatible
+
+#### Phase 3D: Add to Cart Removal & Source URL Redirects - NOT ATTEMPTED
+- **Status**: ❌ NOT ATTEMPTED - Project stopped after 3A-3C failures
+- **Goal**: Replace "Add to cart" with retailer redirects using `inventory.source_urls` metafield
+- **Assessment**: Potentially safer as theme-controlled, not app-controlled
+
+#### Phase 3E: Grid Optimization & Quick View - NOT ATTEMPTED
+- **Status**: ❌ NOT ATTEMPTED - Future consideration only
+- **Goal**: Enhance product display with freed space, quick view functionality
+- **Assessment**: Potentially feasible as layout-focused, doesn't touch app content
 
 ## Technical Achievements
 
