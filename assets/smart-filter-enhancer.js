@@ -8,7 +8,7 @@ class SmartFilterEnhancer {
     this.config = {
       // Filter parameters discovered via MCP testing
       modestFilterParam: 'gf_516964',
-      modestFilterValue: 'modest',
+      modestFilterValue: 'Modest',
       retailerFilterParam: 'gf_516921',
       allProductsPath: '/collections/all',
       debugMode: true
