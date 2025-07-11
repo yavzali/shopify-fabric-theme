@@ -51,24 +51,23 @@
     {%- content_for 'block', type: '_product-list-content', id: 'static-header' -%}
   </div>
 
+  {% assign items_added = 0 %}
   {% capture list_items %}
-    {% for i in (1..max_items) %}
-      {% if section_products.size > 0 %}
-        {% assign index = forloop.index0 %}
-        {% assign product = section_products[index] %}
-      {% else %}
-        {% assign product = null %}
-      {% endif %}
-      <div
-        class="resource-list__item"
-      >
-        {% content_for 'block', type: 'product-card', id: 'static-product-card', closest.product: product %}
-      </div>
+    {% for product in section_products %}
+      {% unless product.vendor == 'UNIQLO' or product.vendor == 'Uniqlo' or product.vendor == 'uniqlo' %}
+        {% if items_added < max_items %}
+          <div
+            class="resource-list__item"
+          >
+            {% content_for 'block', type: 'product-card', id: 'static-product-card', closest.product: product %}
+          </div>
 
-      {% unless forloop.last %}
-        <!--@list/split-->
+          {% assign items_added = items_added | plus: 1 %}
+          {% unless items_added >= max_items %}
+            <!--@list/split-->
+          {% endunless %}
+        {% endif %}
       {% endunless %}
-
     {% endfor %}
   {% endcapture %}
 
@@ -100,7 +99,7 @@
         {% render 'resource-list-carousel',
           ref: 'resourceListCarousel',
           slides: list_items_array,
-          slide_count: max_items,
+          slide_count: items_added,
           settings: section.settings
         %}
       {% when 'editorial' %}
@@ -126,7 +125,7 @@
       {% render 'resource-list-carousel',
         ref: 'resourceListCarouselMobile',
         slides: list_items_array,
-        slide_count: max_items,
+        slide_count: items_added,
         settings: section.settings
       %}
     </div>
