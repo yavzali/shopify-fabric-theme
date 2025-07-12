@@ -333,6 +333,7 @@ export class ProductCard extends Component {
 
     const link = this.refs.productCardLink;
     if (!link.href) return;
+
     const linkURL = new URL(link.href);
 
     const productCardAnchor = link.getAttribute('id');
